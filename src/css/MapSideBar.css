@@ -1,48 +1,72 @@
-.SideBar{
-    z-index: 99;    
+.SideBar {
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background: rgb(49, 122, 28);
+  background: linear-gradient(to bottom, #3d9445 ,#7bc143);
+  width: 20%;
+  height: 100%;
+  box-shadow: 1px 0px 8px 4px rgb(165, 165, 165);
+}
+
+.sidebar-header {
+    padding: 16px;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
-    background: rgb(49,122,28);
-    background: linear-gradient(180deg, rgba(49,122,28,1) 0%, rgba(19,140,39,1) 72%, rgba(8,193,35,1) 100%);
-    width: 20%;
-    height: 100%;
-    box-shadow: 1px 0px 8px 4px rgb(165, 165, 165); 
+    justify-content: center;
+    margin-bottom: 3vh;
+  }
+
+.sidebar-logo {
+  height: 7vh;
+  margin-right: 10px;
 }
 
-.ParameterContainer{
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
-    align-items: center;
-    height: 40vh;
-    width: 5vw;
-    margin-top: 5%;
+.sidebar-title {
+  font-size: 3vh;
+  font-weight: bold;
+  color: #333;
 }
 
-.TextContainer{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 70%;
+.ParameterContainer {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 1;
+  align-items: center;
+  height: 40vh;
+  width: 100%;
+  margin-top: 5%;
 }
 
-.SideBarImg{
-    height: 25vh;
-    width: 12vw;
+.TextContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
 }
 
-.SideBarText{
-    color: white;
-    font-weight: bold;
-    text-align: center;
-    font-size: 2.2vh;
+.SideBarImg {
+  height: 12vh;
+  width: 6vw;
+  margin-bottom: 2vh;
 }
 
-.LoginButton{
-    position: absolute;
-    color: rgb(0, 0, 0);
-    font-size: 2.5vh;
-    bottom: 0;
+.SideBarText {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  font-size: 2.2vh;
+}
+
+#valueLabel{
+    margin-bottom: 2vh;
+}
+
+.LoginButton {
+  position: absolute;
+  color: rgb(0, 0, 0);
+  font-size: 2.5vh;
+  bottom: 0;
 }

@@ -1,0 +1,10 @@
+.tableContainer {
+  max-width: 100%;
+  margin-top: 1rem;
+}
+
+.tableHeadCell {
+  font-weight: bold;
+  color: #333;
+  background-color: #f5f5f5;
+}

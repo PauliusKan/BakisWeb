@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import { TextField, Button, Grid, Container, Typography } from "@mui/material";
 import { StyledEngineProvider } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import "../css/FormStyle.css";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (email && password) {
       console.log(email, password);
+      navigate("/admin");
     }
   };
 
