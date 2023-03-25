@@ -9,6 +9,15 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import SideBarLogo from "../resources/SidebarLogo.png";
 
+const headerBtnSX = {
+  my: 2,
+  color: "white",
+  display: "block",
+  "&:hover": {
+    backgroundColor: "#005800",
+  },
+};
+
 function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -21,10 +30,10 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" style={{ background: "#006400" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <img src={SideBarLogo} alt="Logo" class="sidebar-logo" />
+          <img src={SideBarLogo} alt="Logo" className="sidebar-logo" />
           <Typography
             variant="h6"
             noWrap
@@ -35,24 +44,29 @@ function ResponsiveAppBar() {
               display: { xs: "none", md: "flex" },
               fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
             }}
           >
             Fountains
           </Typography>
-
+            
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Button
+              href="/Admin"
+              sx={headerBtnSX}
+            >
+              Fountain list
+            </Button>
             <Button
               href="/addAdmin"
-              sx={{ my: 2, color: "white", display: "block" }}
+              sx={headerBtnSX}
             >
               Add admin
             </Button>
             <Button
               href="/addFountain"
-              sx={{ my: 2, color: "white", display: "block" }}
+              sx={headerBtnSX}
             >
               Add fountain
             </Button>
@@ -70,9 +84,28 @@ function ResponsiveAppBar() {
                 fontWeight: 700,
                 color: "inherit",
                 textDecoration: "none",
+                cursor: "pointer",
+                justifyContent: "end",
               }}
             >
               Username
+            </Typography>
+            <Typography
+              variant="h6"
+              noWrap
+              onClick={handleOpenUserMenu}
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                color: "inherit",
+                textDecoration: "none",
+                cursor: "pointer",
+                justifyContent: "end",
+              }}
+            >
+              Email@email.com
             </Typography>
 
             <Menu

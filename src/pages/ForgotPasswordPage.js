@@ -1,9 +1,16 @@
-import React from 'react';
+import React from "react";
+import ForgotPasswordForm from "../components/ForgotPasswordForm";
+import BackButton from "../components/BackButton";
+import { Box } from "@mui/material";
+import "../css/BackgroundColor.css"
 
 function ForgotPasswordPage() {
-    return (
-        <h1>this is the ForgotPasswordPage</h1>
-    );
+  return (
+    <Box>
+      <BackButton to='/'/>
+      <ForgotPasswordForm/>
+    </Box>
+  );
 }
 
 export default ForgotPasswordPage;

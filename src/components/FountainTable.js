@@ -17,7 +17,6 @@ import {
   Paper,
   Button,
   Switch,
-  Grid,
   TableFooter,
   TablePagination,
 } from "@mui/material";
@@ -110,14 +109,6 @@ export const FountainTable = ({ fountains }) => {
   };
 
   return (
-    <Grid
-      container
-      spacing={0}
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-      style={{ minHeight: "80vh", padding: "50px" }}
-    >
       <TableContainer
         component={Paper}
         className="tableContainer"
@@ -132,7 +123,7 @@ export const FountainTable = ({ fountains }) => {
               <TableCell className="tableHeadCell">Latitude</TableCell>
               <TableCell className="tableHeadCell">Longitude</TableCell>
               <TableCell className="tableHeadCell" align="center">
-                Controlls
+                Controls
               </TableCell>
             </TableRow>
           </TableHead>
@@ -156,6 +147,7 @@ export const FountainTable = ({ fountains }) => {
                     variant="outlined"
                     sx={{ marginRight: "10px" }}
                     color="success"
+                    href="/editFountain"
                   >
                     Edit
                   </Button>
@@ -193,6 +185,5 @@ export const FountainTable = ({ fountains }) => {
           </TableFooter>
         </Table>
       </TableContainer>
-    </Grid>
   );
 };

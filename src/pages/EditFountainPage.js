@@ -1,9 +1,9 @@
 import React from "react";
 import { Grid, Box } from "@mui/material";
 import ResponsiveAppBar from "../components/Navbar";
-import AddFountainForm from "../components/AddFountainForm";
+import EditFountainForm from "../components/EditFountainForm";
 
-function AddFountainPage() {
+function EditFountainPage() {
   return (
     <Box>
       <ResponsiveAppBar />
@@ -15,10 +15,10 @@ function AddFountainPage() {
         justifyContent="center"
         style={{ minHeight: "80vh", padding: "20px" }}
       >
-        <AddFountainForm />
+        <EditFountainForm />
       </Grid>
     </Box>
   );
 }
 
-export default AddFountainPage;
+export default EditFountainPage;

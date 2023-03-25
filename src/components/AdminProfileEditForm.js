@@ -1,22 +1,26 @@
 import React, { useState } from "react";
-import { TextField, Button, Grid, Container, Typography } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Grid,
+  Container,
+  Typography,
+} from "@mui/material";
 import { StyledEngineProvider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "../css/FormStyle.css";
 
-const LoginForm = () => {
+const AdminProfileEditForm = (fountainId) => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
 
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    if (email && password) {
-      console.log(email, password);
-      navigate("/admin");
-    }
+    navigate("/admin");
   };
 
   return (
@@ -31,9 +35,19 @@ const LoginForm = () => {
       >
         <Container className="form-container">
           <Typography variant="h4" className="title" gutterBottom>
-            Admin Login
+            Profile info
           </Typography>
           <form className="form" onSubmit={handleSubmit}>
+            <TextField
+              id="username"
+              label="Username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              variant="outlined"
+              className="input"
+              required
+            />
             <TextField
               id="email"
               label="Email"
@@ -44,7 +58,10 @@ const LoginForm = () => {
               className="input"
               required
             />
-            <TextField
+
+            <br/>
+            <br/>
+             <TextField
               id="password"
               label="Password"
               type="password"
@@ -54,7 +71,16 @@ const LoginForm = () => {
               className="input"
               required
             />
-            <Typography variant="subtitle2" component="a" href="/forgotPassword">Forgot password?</Typography>
+             <TextField
+              id="repeatPassword"
+              label="Repeat Password"
+              type="password"
+              value={repeatPassword}
+              onChange={(e) => setRepeatPassword(e.target.value)}
+              variant="outlined"
+              className="input"
+              required
+            />
 
             <Button
               type="submit"
@@ -62,7 +88,7 @@ const LoginForm = () => {
               color="success"
               className="button"
             >
-              Login
+              Save
             </Button>
           </form>
         </Container>
@@ -70,4 +96,4 @@ const LoginForm = () => {
     </StyledEngineProvider>
   );
 };
-export default LoginForm;
+export default AdminProfileEditForm;

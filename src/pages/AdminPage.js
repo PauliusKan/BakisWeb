@@ -1,11 +1,23 @@
 import React from "react";
 import { FountainTable } from "../components/FountainTable";
+import { Grid, Box } from "@mui/material";
+import ResponsiveAppBar from "../components/Navbar";
 
 function AddAdminPage() {
   return (
-    <div>
-      <FountainTable fountains={mockList} />
-    </div>
+    <Box>
+      <ResponsiveAppBar />
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        style={{ minHeight: "80vh", padding: "20px" }}
+      >
+        <FountainTable fountains={mockList} />
+      </Grid>
+    </Box>
   );
 }
 
