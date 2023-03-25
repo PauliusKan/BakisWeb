@@ -1,17 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MapPage from "./pages/MapPage";
+import AddAdminPage from "./pages/AddAdminPage";
+import AddFountainPage from "./pages/AddFountainPage";
+import EditFountainPage from "./pages/EditFountainPage";
+import AdminPage from "./pages/AdminPage";
+import AdminProfileEditPage from "./pages/AdminProfileEditPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import LoginPage from "./pages/LoginPage";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MapPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/adminProfileEdit" element={<AdminProfileEditPage />} />
+        <Route path="/addAdmin" element={<AddAdminPage />} />
+        <Route path="/addFountain" element={<AddFountainPage />} />
+        <Route path="/editFountain" element={<EditFountainPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
