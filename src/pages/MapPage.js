@@ -1,13 +1,14 @@
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
-import "./App.css";
+import SideBar from "../components/MapSideBar";
+import "../css/MapPage.css";
 
 const markers = [
   { id: 1, lat: 48.8584, lng: 2.2945 },
   { id: 2, lat: 48, lng: 2 },
 ];
 
-function App() {
+function MapPage() {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
@@ -29,26 +30,7 @@ function App() {
 
   return (
     <div className="MainPage">
-      <div className="SideBar">
-        <img
-          className="SideBarImg"
-          src="https://st2.depositphotos.com/7458252/12211/i/950/depositphotos_122113036-stock-photo-road-sign-used-in-slovakia.jpg"
-          alt=""
-        ></img>
-        <p className="SideBarText">Hello izza texts</p>
-        <img
-          className="SideBarImg"
-          src="https://st2.depositphotos.com/7458252/12211/i/950/depositphotos_122113036-stock-photo-road-sign-used-in-slovakia.jpg"
-          alt=""
-        ></img>
-        <p className="SideBarText">Hello izza texts</p>
-        <img
-          className="SideBarImg"
-          src="https://st2.depositphotos.com/7458252/12211/i/950/depositphotos_122113036-stock-photo-road-sign-used-in-slovakia.jpg"
-          alt=""
-        ></img>
-        <p className="SideBarText">Hello izza texts</p>
-      </div>
+      <SideBar/>
       <div className="Map">
         <GoogleMap
           center={center}
@@ -88,4 +70,4 @@ function App() {
   );
 }
 
-export default App;
+export default MapPage;

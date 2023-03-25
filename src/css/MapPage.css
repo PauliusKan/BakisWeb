@@ -1,0 +1,12 @@
+.MainPage{
+    display: flex;
+    height: 100vh;
+    min-width: 100px;
+}
+
+.Map{
+    margin-left: auto; 
+    margin-right: 0;
+    width: 100%;
+    height: 100%;
+}
