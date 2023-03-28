@@ -13,7 +13,7 @@ function AddAdminPage() {
         direction="column"
         alignItems="center"
         justifyContent="center"
-        style={{ minHeight: "80vh", padding: "20px" }}
+        style={{ minHeight: "80vh", padding: "20px", paddingInline: "40px" }}
       >
         <FountainTable fountains={mockList} />
       </Grid>

@@ -7,7 +7,7 @@ import "../css/BackgroundColor.css"
 function ForgotPasswordPage() {
   return (
     <Box>
-      <BackButton to='/'/>
+      <BackButton to='/login'/>
       <ForgotPasswordForm/>
     </Box>
   );

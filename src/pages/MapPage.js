@@ -2,10 +2,12 @@ import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import SideBar from "../components/MapSideBar";
 import "../css/MapPage.css";
+import Marker from "../resources/fountainMarker4.png"
 
 const markers = [
-  { id: 1, lat: 48.8584, lng: 2.2945 },
-  { id: 2, lat: 48, lng: 2 },
+  { id: 1, lat: 54.904011, lng: 23.958356 },
+  { id: 2, lat: 54.915509, lng: 23.971891 },
+  { id: 3, lat: 54.896643, lng: 23.921028 },
 ];
 
 function MapPage() {
@@ -61,6 +63,7 @@ function MapPage() {
               <MarkerF
                 key={marker.id}
                 position={{ lat: marker.lat, lng: marker.lng }}
+                icon={Marker}
               ></MarkerF>
             );
           })}

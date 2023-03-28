@@ -8,6 +8,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import SideBarLogo from "../resources/SidebarLogo.png";
+import { useNavigate } from "react-router-dom";
 
 const headerBtnSX = {
   my: 2,
@@ -21,6 +22,8 @@ const headerBtnSX = {
 function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+  const navigate = useNavigate();
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -29,18 +32,27 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  const handleLogoutClick = () => {
+    handleCloseUserMenu();
+    localStorage.clear();
+    navigate("/");
+  };
+
   return (
     <AppBar position="static" style={{ background: "#006400" }}>
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" sx={{ ml: 3 }}>
         <Toolbar disableGutters>
-          <img src={SideBarLogo} alt="Logo" className="sidebar-logo" />
+          <a href="/">
+            <img src={SideBarLogo} alt="Logo" className="sidebar-logo" />
+          </a>
           <Typography
             variant="h6"
             noWrap
             component="a"
             href="/"
             sx={{
-              mr: 2,
+              mr: 4,
+              paddingLeft: 0.5,
               display: { xs: "none", md: "flex" },
               fontFamily: "monospace",
               fontWeight: 700,
@@ -50,24 +62,15 @@ function ResponsiveAppBar() {
           >
             Fountains
           </Typography>
-            
+
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-          <Button
-              href="/Admin"
-              sx={headerBtnSX}
-            >
+            <Button href="/Admin" sx={headerBtnSX}>
               Fountain list
             </Button>
-            <Button
-              href="/addAdmin"
-              sx={headerBtnSX}
-            >
+            <Button href="/addAdmin" sx={headerBtnSX}>
               Add admin
             </Button>
-            <Button
-              href="/addFountain"
-              sx={headerBtnSX}
-            >
+            <Button href="/addFountain" sx={headerBtnSX}>
               Add fountain
             </Button>
           </Box>
@@ -78,7 +81,7 @@ function ResponsiveAppBar() {
               noWrap
               onClick={handleOpenUserMenu}
               sx={{
-                mr: 2,
+                mr: -18,
                 display: { xs: "none", md: "flex" },
                 fontFamily: "monospace",
                 fontWeight: 700,
@@ -88,14 +91,14 @@ function ResponsiveAppBar() {
                 justifyContent: "end",
               }}
             >
-              Username
+              {localStorage.getItem("name")}
             </Typography>
             <Typography
               variant="h6"
               noWrap
               onClick={handleOpenUserMenu}
               sx={{
-                mr: 2,
+                mr: -18,
                 display: { xs: "none", md: "flex" },
                 fontFamily: "monospace",
                 fontWeight: 700,
@@ -105,7 +108,7 @@ function ResponsiveAppBar() {
                 justifyContent: "end",
               }}
             >
-              Email@email.com
+              {localStorage.getItem("email")}
             </Typography>
 
             <Menu
@@ -136,7 +139,7 @@ function ResponsiveAppBar() {
                 component="a"
                 href="/"
                 key="Logout"
-                onClick={handleCloseUserMenu}
+                onClick={handleLogoutClick}
               >
                 <Typography textAlign="center">Logout</Typography>
               </MenuItem>

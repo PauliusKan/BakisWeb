@@ -1,21 +1,40 @@
 import React, { useState } from "react";
+import Axios from "axios";
 import { TextField, Button, Grid, Container, Typography } from "@mui/material";
 import { StyledEngineProvider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import url from "../url.js";
 import "../css/FormStyle.css";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [errorMsg, setauthenticated] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (email && password) {
-      console.log(email, password);
-      navigate("/admin");
+    try {
+      await Axios.post(url + "/AdminController/login", {
+        email: email,
+        password: password,
+      }).then((res) => {
+        if (res.data.auth) {
+          setauthenticated(false);
+          localStorage.setItem("errorMsg", true);
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("name", res.data.result.name);
+          localStorage.setItem("email", res.data.result.email);
+          localStorage.setItem("Id", res.data.result.Id);
+          navigate("/admin");
+        } else {
+          localStorage.clear();
+          setauthenticated(true);
+        }
+      });
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -54,8 +73,18 @@ const LoginForm = () => {
               className="input"
               required
             />
-            <Typography variant="subtitle2" component="a" href="/forgotPassword">Forgot password?</Typography>
-
+            {errorMsg &&
+            <Typography variant="subtitle2" sx={{ color: "red" }}>
+              Username or password is incorrect
+            </Typography>
+            }
+            <Typography
+              variant="subtitle2"
+              component="a"
+              href="/forgotPassword"
+            >
+              Forgot password?
+            </Typography>
             <Button
               type="submit"
               variant="contained"

@@ -45,7 +45,7 @@ const AddFountainForm = (fountainIds) => {
       >
         <Container className="form-container">
           <Typography variant="h4" className="title" gutterBottom>
-            Fountain info
+            Add new fountain
           </Typography>
           <form className="form" onSubmit={handleSubmit}>
             <FormControl>
