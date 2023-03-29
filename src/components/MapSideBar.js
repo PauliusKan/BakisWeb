@@ -28,7 +28,7 @@ function SideBar() {
           <Typography variant="H4" className="SideBarText" id="valueLabel">
             Sunaudota vandens (L):
           </Typography>
-          <Typography variant="h4" className="SideBarText">
+          <Typography variant="H4" className="SideBarText">
             500
           </Typography>
         </div>

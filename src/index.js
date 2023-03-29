@@ -10,6 +10,7 @@ import AdminPage from "./pages/AdminPage";
 import AdminProfileEditPage from "./pages/AdminProfileEditPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import LoginPage from "./pages/LoginPage";
+import SecureRoute from "./components/SecureRoute";
 
 export default function App() {
   return (
@@ -18,11 +19,11 @@ export default function App() {
         <Route path="/" element={<MapPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="/adminProfileEdit" element={<AdminProfileEditPage />} />
-        <Route path="/addAdmin" element={<AddAdminPage />} />
-        <Route path="/addFountain" element={<AddFountainPage />} />
-        <Route path="/editFountain" element={<EditFountainPage />} />
+        <Route path="/admin" element={<SecureRoute><AdminPage /></SecureRoute>} />
+        <Route path="/adminProfileEdit" element={<SecureRoute><AdminProfileEditPage /></SecureRoute>} />
+        <Route path="/addAdmin" element={<SecureRoute><AddAdminPage /></SecureRoute>} />
+        <Route path="/addFountain" element={<SecureRoute><AddFountainPage /></SecureRoute>} />
+        <Route path="/editFountain" element={<SecureRoute><EditFountainPage /></SecureRoute>} />
       </Routes>
     </BrowserRouter>
   );
