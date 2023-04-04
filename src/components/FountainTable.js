@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
+import Axios from "axios";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -7,6 +9,7 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import PropTypes from "prop-types";
+import url from "../url.js";
 import {
   Table,
   TableBody,
@@ -91,9 +94,17 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-export const FountainTable = ({ fountains }) => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+export const FountainTable = () => {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [fountains, setFountains] = useState([]);
+
+  useEffect(() => {
+    Axios.get(url + "/AdminController/getFountains").then((res) => {
+      setFountains(res.data);
+      console.log(res.data);
+    });
+  }, []);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -109,81 +120,83 @@ export const FountainTable = ({ fountains }) => {
   };
 
   return (
-      <TableContainer
-        component={Paper}
-        className="tableContainer"
-        sx={{ maxHeight: "80vh" }}
-      >
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell className="tableHeadCell" sx={{fontWeight: "bold"}}>Name</TableCell>
-              <TableCell className="tableHeadCell">FountainId</TableCell>
-              <TableCell className="tableHeadCell">Address</TableCell>
-              <TableCell className="tableHeadCell">Latitude</TableCell>
-              <TableCell className="tableHeadCell">Longitude</TableCell>
-              <TableCell className="tableHeadCell" align="center">
-                Controls
+    <TableContainer
+      component={Paper}
+      className="tableContainer"
+      sx={{ maxHeight: "80vh" }}
+    >
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell className="tableHeadCell" sx={{ fontWeight: "bold" }}>
+              Name
+            </TableCell>
+            <TableCell className="tableHeadCell">FountainId</TableCell>
+            <TableCell className="tableHeadCell">Address</TableCell>
+            <TableCell className="tableHeadCell">Latitude</TableCell>
+            <TableCell className="tableHeadCell">Longitude</TableCell>
+            <TableCell className="tableHeadCell" align="center">
+              Controls
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {(rowsPerPage > 0
+            ? fountains.slice(
+                page * rowsPerPage,
+                page * rowsPerPage + rowsPerPage
+              )
+            : fountains
+          ).map((fountain) => (
+            <TableRow key={fountain.id}>
+              <TableCell>{fountain.name}</TableCell>
+              <TableCell>{fountain.id}</TableCell>
+              <TableCell>{fountain.address}</TableCell>
+              <TableCell>{fountain.latitude}</TableCell>
+              <TableCell>{fountain.longitude}</TableCell>
+              <TableCell align="center">
+                <Switch color="success"></Switch>
+                <Button
+                  variant="outlined"
+                  sx={{ marginRight: "10px" }}
+                  color="success"
+                  href="/editFountain"
+                >
+                  Edit
+                </Button>
+                <Button variant="contained" color="error">
+                  Delete
+                </Button>
               </TableCell>
             </TableRow>
-          </TableHead>
-          <TableBody>
-            {(rowsPerPage > 0
-              ? fountains.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
-              : fountains
-            ).map((fountain) => (
-              <TableRow key={fountain.fountainId}>
-                <TableCell>{fountain.name}</TableCell>
-                <TableCell>{fountain.fountainId}</TableCell>
-                <TableCell>{fountain.address}</TableCell>
-                <TableCell>{fountain.latitude}</TableCell>
-                <TableCell>{fountain.longitude}</TableCell>
-                <TableCell align="center">
-                  <Switch color="success"></Switch>
-                  <Button
-                    variant="outlined"
-                    sx={{ marginRight: "10px" }}
-                    color="success"
-                    href="/editFountain"
-                  >
-                    Edit
-                  </Button>
-                  <Button variant="contained" color="error">
-                    Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 70 * emptyRows }}>
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[10, 25, 50, { label: "All", value: -1 }]}
-                colSpan={8}
-                count={fountains.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: {
-                    "aria-label": "rows per page",
-                  },
-                  native: true,
-                }}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-              />
+          ))}
+          {emptyRows > 0 && (
+            <TableRow style={{ height: 70 * emptyRows }}>
+              <TableCell colSpan={6} />
             </TableRow>
-          </TableFooter>
-        </Table>
-      </TableContainer>
+          )}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={[10, 25, 50, { label: "All", value: -1 }]}
+              colSpan={8}
+              count={fountains.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              SelectProps={{
+                inputProps: {
+                  "aria-label": "rows per page",
+                },
+                native: true,
+              }}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              ActionsComponent={TablePaginationActions}
+            />
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </TableContainer>
   );
 };
