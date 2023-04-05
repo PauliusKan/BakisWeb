@@ -10,6 +10,7 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import PropTypes from "prop-types";
 import url from "../url.js";
+import FountainTableSwitch from "./FountainTableSwitch";
 import {
   Table,
   TableBody,
@@ -19,7 +20,6 @@ import {
   TableRow,
   Paper,
   Button,
-  Switch,
   TableFooter,
   TablePagination,
 } from "@mui/material";
@@ -96,13 +96,12 @@ TablePaginationActions.propTypes = {
 
 export const FountainTable = () => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [fountains, setFountains] = useState([]);
 
   useEffect(() => {
-    Axios.get(url + "/AdminController/getFountains").then((res) => {
+    Axios.get(url + "/FountainController/getFountains").then((res) => {
       setFountains(res.data);
-      console.log(res.data);
     });
   }, []);
 
@@ -155,7 +154,10 @@ export const FountainTable = () => {
               <TableCell>{fountain.latitude}</TableCell>
               <TableCell>{fountain.longitude}</TableCell>
               <TableCell align="center">
-                <Switch color="success"></Switch>
+                <FountainTableSwitch
+                  initialState={fountain.isworking}
+                  fountainId={fountain.id}
+                />
                 <Button
                   variant="outlined"
                   sx={{ marginRight: "10px" }}
@@ -179,7 +181,7 @@ export const FountainTable = () => {
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[10, 25, 50, { label: "All", value: -1 }]}
+              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
               colSpan={8}
               count={fountains.length}
               rowsPerPage={rowsPerPage}

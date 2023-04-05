@@ -2,7 +2,8 @@ import "../css/MapSideBar.css";
 import { Link, Typography } from "@mui/material";
 import SideBarLogo from "../resources/SidebarLogo.png";
 import WaterDrop from "../resources/WaterDrop.png";
-import WaterBottle from "../resources/WaterBottle.png";
+import WaterBottle from "../resources/WaterBottles.png";
+import PlasticBin from "../resources/PlasticBin.png";
 
 function SideBar() {
   var button;
@@ -28,7 +29,7 @@ function SideBar() {
           <Typography variant="H4" className="SideBarText" id="valueLabel">
             Sunaudota vandens (L):
           </Typography>
-          <Typography variant="H4" className="SideBarText">
+          <Typography variant="h5" className="SideBarText">
             500
           </Typography>
         </div>
@@ -39,7 +40,19 @@ function SideBar() {
           <Typography variant="H4" className="SideBarText" id="valueLabel">
             Sutaupyta 0.5l vandens buteliukų:
           </Typography>
-          <Typography variant="h4" className="SideBarText">
+          <Typography variant="h5" className="SideBarText">
+            500
+          </Typography>
+        </div>
+      </div>
+
+      <div className="ParameterContainer">
+        <img className="SideBarImg" src={PlasticBin} alt=""></img>
+        <div className="TextContainer">
+          <Typography variant="H4" className="SideBarText" id="valueLabel">
+            Sutaupyta plastiko kg:
+          </Typography>
+          <Typography variant="h5" className="SideBarText">
             500
           </Typography>
         </div>
