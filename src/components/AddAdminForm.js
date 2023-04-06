@@ -1,16 +1,32 @@
 import React, { useState } from "react";
 import { TextField, Button, Grid, Container, Typography } from "@mui/material";
 import { StyledEngineProvider } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import Axios from "axios";
+import url from "../url";
 import "../css/FormStyle.css";
 
 const AddAdminForm = () => {
   const [email, setEmail] = useState("");
+  const [errorMsg, setErrorMsg] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (email) {
-      console.log(email);
+      await Axios.post(url + "/RegisterNewAdminController/newAdmin", {
+        email: email,
+      }).catch((error) => {
+        if(error.response.status === 403){
+          setErrorMsg(true);
+        }
+      }).then((res) => {
+        if(res.status === 200){
+          setErrorMsg(false);
+          //navigate("/admin");
+        }
+      });
     }
   };
 
@@ -39,6 +55,13 @@ const AddAdminForm = () => {
               className="input"
               required
             />
+
+            {errorMsg && (
+              <Typography variant="subtitle2" sx={{ color: "red" }}>
+                Admin already exists or email is wrong!
+              </Typography>
+            )}
+
             <Button
               type="submit"
               variant="contained"

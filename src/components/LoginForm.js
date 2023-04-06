@@ -9,7 +9,7 @@ import "../css/FormStyle.css";
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMsg, setauthenticated] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -21,7 +21,7 @@ const LoginForm = () => {
         password: password,
       }).then((res) => {
         if (res.data.auth) {
-          setauthenticated(false);
+          setErrorMsg(false);
           localStorage.setItem("errorMsg", true);
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("name", res.data.result.name);
@@ -30,7 +30,7 @@ const LoginForm = () => {
           navigate("/admin");
         } else {
           localStorage.clear();
-          setauthenticated(true);
+          setErrorMsg(true);
         }
       });
     } catch (err) {
