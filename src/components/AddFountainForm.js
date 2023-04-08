@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Axios from "axios";
 import {
   TextField,
   Button,
@@ -12,6 +13,7 @@ import {
 } from "@mui/material";
 import { StyledEngineProvider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import url from "../url.js";
 import "../css/FormStyle.css";
 
 const AddFountainForm = (fountainIds) => {
@@ -19,19 +21,46 @@ const AddFountainForm = (fountainIds) => {
   const [address, setAddress] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-  const [description, setDescription] = useState("");
   const [fountainId, setFountainId] = useState("");
+  const [fountainIdList, setFountainIdList] = useState([]);
+  const [noFountainsMsg, setNoFountainsMsg] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    navigate("/admin");
+
+    if (name && address && latitude && longitude && fountainId) {
+      await Axios.post(url + "/FountainController/updateFountain", {
+        name: name,
+        address: address,
+        latitude: latitude,
+        longitude: longitude,
+        fountainId: fountainId, 
+        isworking: true,
+      }).then((res) => {
+        if(res.status === 200){
+        navigate('/admin');
+        }
+      });
+    }
   };
 
   const handleChange = (event) => {
     setFountainId(event.target.value);
   };
+
+  useEffect(() => {
+    Axios.get(url + "/FountainController/getNewFountains").then((res) => {
+      console.log(res.data);
+      console.log(res.data.length);
+      if (res.data.length === 0) {
+        setNoFountainsMsg(true);
+        return;
+      }
+      setFountainIdList(res.data);
+    });
+  }, []);
 
   return (
     <StyledEngineProvider injectFirst>
@@ -47,6 +76,13 @@ const AddFountainForm = (fountainIds) => {
           <Typography variant="h4" className="title" gutterBottom>
             Add new fountain
           </Typography>
+
+          {noFountainsMsg && (
+            <Typography variant="subtitle2" className="title">
+              No new fountains have been found.
+            </Typography>
+          )}
+
           <form className="form" onSubmit={handleSubmit}>
             <FormControl>
               <InputLabel id="fountainIdLabel">Fountain Id</InputLabel>
@@ -59,8 +95,11 @@ const AddFountainForm = (fountainIds) => {
                 sx={{ mb: "20px" }}
                 required
               >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
+                {fountainIdList.map((fountainId) => (
+                  <MenuItem key={fountainId.id} value={fountainId.id}>
+                    {fountainId.id}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
             <TextField
@@ -82,17 +121,6 @@ const AddFountainForm = (fountainIds) => {
               variant="outlined"
               className="input"
               required
-            />
-            <TextField
-              id="description"
-              label="Description"
-              type="text"
-              multiline
-              rows={2}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              variant="outlined"
-              className="input"
             />
 
             <Typography variant="h6" sx={{ ml: "5px" }}>

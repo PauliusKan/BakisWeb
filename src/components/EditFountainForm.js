@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   TextField,
   Button,
@@ -7,24 +7,51 @@ import {
   Typography,
 } from "@mui/material";
 import { StyledEngineProvider } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import Axios from "axios";
+import url from "../url.js";
 import "../css/FormStyle.css";
 
-const EditFountainForm = (fountainId) => {
+const EditFountainForm = () => {
+  const location = useLocation()
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-  const [description, setDescription] = useState("");
-  const [editedFountainId, setFountainId] = useState("");
+  const [isworking, setIsWorking] = useState(true);
+  const [fountainId, setFountainId] = useState(location.state.id);
+
+  useEffect(() => {
+    Axios.get(url + `/FountainController/getFountain/${location.state.id}`).then((res) => {
+      setName(res.data.name);
+      setAddress(res.data.address);
+      setLatitude(res.data.latitude);
+      setLongitude(res.data.longitude);
+      setIsWorking(res.data.isworking);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    navigate("/admin");
-  };
 
+    if (name && address && latitude && longitude && fountainId) {
+      await Axios.post(url + "/FountainController/updateFountain", {
+        name: name,
+        address: address,
+        latitude: latitude,
+        longitude: longitude,
+        fountainId: fountainId, 
+        isworking: isworking,
+      }).then((res) => {
+        if(res.status === 200){
+        navigate('/admin');
+        }
+      });
+    }
+  };
   return (
     <StyledEngineProvider injectFirst>
       <Grid
@@ -44,7 +71,7 @@ const EditFountainForm = (fountainId) => {
               id="fountainId"
               label="Fountain Id"
               type="text"
-              value={editedFountainId}
+              value={fountainId}
               onChange={(e) => setFountainId(e.target.value)}
               variant="outlined"
               className="input"
@@ -70,17 +97,6 @@ const EditFountainForm = (fountainId) => {
               variant="outlined"
               className="input"
               required
-            />
-            <TextField
-              id="description"
-              label="Description"
-              type="text"
-              multiline
-              rows={2}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              variant="outlined"
-              className="input"
             />
 
             <Typography variant="h6" sx={{ ml: "5px" }}>

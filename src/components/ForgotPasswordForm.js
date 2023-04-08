@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 import { TextField, Button, Grid, Container, Typography } from "@mui/material";
 import { StyledEngineProvider } from "@mui/material";
+import Axios from "axios";
+import url from "../url";
 import "../css/FormStyle.css";
 
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState("");
+  const [successMsg, setSuccessMsg] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (email) {
-      console.log(email);
+      await Axios.post(url + "/ForgotPasswordController/resetPassword", {
+        email: email,
+      }).then((res) => {
+        if(res.status === 200){
+          setSuccessMsg(true);
+        }
+      });
     }
   };
 
@@ -39,6 +48,12 @@ const ForgotPasswordForm = () => {
               className="input"
               required
             />
+            {successMsg && (
+              <Typography variant="subtitle2" sx={{ color: "green" }}>
+                The password was reset for this email!
+              </Typography>
+            )}
+
             <Button
               type="submit"
               variant="contained"

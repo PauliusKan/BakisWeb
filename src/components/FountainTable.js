@@ -11,6 +11,9 @@ import LastPageIcon from "@mui/icons-material/LastPage";
 import PropTypes from "prop-types";
 import url from "../url.js";
 import FountainTableSwitch from "./FountainTableSwitch";
+import FountainTableEditButton from "./FountainTableEditButton";
+import FountainTableDeleteButton from "./FountainTableDeleteButton";
+import { StyledEngineProvider } from "@mui/material";
 import {
   Table,
   TableBody,
@@ -19,7 +22,6 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Button,
   TableFooter,
   TablePagination,
 } from "@mui/material";
@@ -101,9 +103,17 @@ export const FountainTable = () => {
 
   useEffect(() => {
     Axios.get(url + "/FountainController/getFountains").then((res) => {
-      setFountains(res.data);
+      setFountains(
+        res.data.filter(
+          (fountain) => fountain.latitude != null || fountain.longitude != null
+        )
+      );
     });
   }, []);
+
+  const refreshTableAfterDelete = (fountainId) => {
+    setFountains(fountains.filter((fountain) => fountain.id !== fountainId));
+  };
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -127,16 +137,17 @@ export const FountainTable = () => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell className="tableHeadCell" sx={{ fontWeight: "bold" }}>
-              Name
-            </TableCell>
-            <TableCell className="tableHeadCell">FountainId</TableCell>
-            <TableCell className="tableHeadCell">Address</TableCell>
-            <TableCell className="tableHeadCell">Latitude</TableCell>
-            <TableCell className="tableHeadCell">Longitude</TableCell>
-            <TableCell className="tableHeadCell" align="center">
-              Controls
-            </TableCell>
+            <StyledEngineProvider injectFirst>
+              <TableCell className="tableHeadCell">FountainId</TableCell>
+              <TableCell className="tableHeadCell">Name</TableCell>
+              <TableCell className="tableHeadCell">Address</TableCell>
+              <TableCell className="tableHeadCell">Latitude</TableCell>
+              <TableCell className="tableHeadCell">Longitude</TableCell>
+              <TableCell className="tableHeadCell">Modified On</TableCell>
+              <TableCell className="tableHeadCell" align="center">
+                Controls
+              </TableCell>
+            </StyledEngineProvider>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -148,27 +159,19 @@ export const FountainTable = () => {
             : fountains
           ).map((fountain) => (
             <TableRow key={fountain.id}>
-              <TableCell>{fountain.name}</TableCell>
               <TableCell>{fountain.id}</TableCell>
-              <TableCell>{fountain.address}</TableCell>
-              <TableCell>{fountain.latitude}</TableCell>
-              <TableCell>{fountain.longitude}</TableCell>
+              <TableCell>{fountain.name ?? "-"}</TableCell>
+              <TableCell>{fountain.address ?? "-"}</TableCell>
+              <TableCell>{fountain.latitude ?? "-"}</TableCell>
+              <TableCell>{fountain.longitude ?? "-"}</TableCell>
+              <TableCell>{fountain.modifiedon ?? "-"}</TableCell>
               <TableCell align="center">
                 <FountainTableSwitch
                   initialState={fountain.isworking}
                   fountainId={fountain.id}
                 />
-                <Button
-                  variant="outlined"
-                  sx={{ marginRight: "10px" }}
-                  color="success"
-                  href="/editFountain"
-                >
-                  Edit
-                </Button>
-                <Button variant="contained" color="error">
-                  Delete
-                </Button>
+                <FountainTableEditButton fountainId={fountain.id} />
+                <FountainTableDeleteButton fountain={fountain} onDelete={refreshTableAfterDelete} />
               </TableCell>
             </TableRow>
           ))}

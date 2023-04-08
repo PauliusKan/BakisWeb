@@ -19,9 +19,9 @@ function SideBar() {
 
   return (
     <div className="SideBar">
-      <div class="sidebar-header">
-        <img src={SideBarLogo} alt="Logo" class="sidebar-logo" />
-        <h1 class="sidebar-title">Fountains</h1>
+      <div className="sidebar-header">
+        <img src={SideBarLogo} alt="Logo" className="sidebar-logo" />
+        <h1 className="sidebar-title">Fountains</h1>
       </div>
       <div className="ParameterContainer">
         <img className="SideBarImg" src={WaterDrop} alt=""></img>

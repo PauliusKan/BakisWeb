@@ -24,7 +24,7 @@ const AddAdminForm = () => {
       }).then((res) => {
         if(res.status === 200){
           setErrorMsg(false);
-          //navigate("/admin");
+          navigate("/admin");
         }
       });
     }
