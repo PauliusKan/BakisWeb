@@ -1,10 +1,16 @@
-import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  useLoadScript,
+  MarkerF,
+  InfoWindow,
+} from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import SideBar from "../components/MapSideBar";
 import "../css/MapPage.css";
-import Marker from "../resources/fountainMarker4.png"
 import url from "../url.js";
 import Axios from "axios";
+import Marker from "../resources/fountainMarker4.png";
+import FountainInfoWindow from "../components/FountainInfoWindow";
 
 /*const markers = [
   { id: 1, lat: 54.904011, lng: 23.958356 },
@@ -19,6 +25,7 @@ function MapPage() {
 
   const [fountains, setFountains] = useState([]);
   const [center, setCenter] = useState({ lat: 48.8584, lng: 2.2945 });
+  const [selectedFountain, setSelectedCenter] = useState(null);
 
   useEffect(() => {
     navigator?.geolocation.getCurrentPosition(
@@ -37,17 +44,13 @@ function MapPage() {
     });
   }, []);
 
-  const handleMarkerClick = () =>{
-    console.log("ASDASDA")
-  }
-
   if (!isLoaded) {
     return <div>Map isn't loaded</div>;
   }
 
   return (
     <div className="MainPage">
-      <SideBar/>
+      <SideBar />
       <div className="Map">
         <GoogleMap
           center={center}
@@ -79,10 +82,25 @@ function MapPage() {
                 key={fountain.id}
                 position={{ lat: fountain.latitude, lng: fountain.longitude }}
                 icon={Marker}
-                onClick={handleMarkerClick}
+                onClick={() => {
+                  setSelectedCenter(fountain);
+                }}
               ></MarkerF>
             );
           })}
+          {selectedFountain && (
+            <InfoWindow
+              onCloseClick={() => {
+                setSelectedCenter(null);
+              }}
+              position={{
+                lat: selectedFountain.latitude,
+                lng: selectedFountain.longitude,
+              }}
+            >
+              <FountainInfoWindow fountain={selectedFountain} />
+            </InfoWindow>
+          )}
         </GoogleMap>
       </div>
     </div>

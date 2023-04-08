@@ -21,7 +21,7 @@ function SideBar() {
     <div className="SideBar">
       <div className="sidebar-header">
         <img src={SideBarLogo} alt="Logo" className="sidebar-logo" />
-        <h1 className="sidebar-title">Fountains</h1>
+        <h1 class="sidebar-title">Fountains</h1>
       </div>
       <div className="ParameterContainer">
         <img className="SideBarImg" src={WaterDrop} alt=""></img>

@@ -50,6 +50,15 @@
   width: 6vw;
 }
 
+.InfoWindowImg {
+  height: 6vh;
+  width: 3vw;
+}
+
+.InfoWindowText {
+  text-align: center;
+}
+
 .SideBarText {
   color: white;
   font-weight: bold;
