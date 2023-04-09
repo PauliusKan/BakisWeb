@@ -31,7 +31,7 @@ const AddFountainForm = (fountainIds) => {
     event.preventDefault();
 
     if (name && address && latitude && longitude && fountainId) {
-      await Axios.post(url + "/FountainController/updateFountain", {
+      await Axios.post(url + "/FountainController/addFountain", {
         name: name,
         address: address,
         latitude: latitude,

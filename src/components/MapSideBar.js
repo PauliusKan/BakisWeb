@@ -1,21 +1,55 @@
 import "../css/MapSideBar.css";
 import { Link, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import url from "../url.js";
+import Axios from "axios";
 import SideBarLogo from "../resources/SidebarLogo.png";
 import WaterDrop from "../resources/WaterDrop.png";
 import WaterBottle from "../resources/WaterBottles.png";
 import PlasticBin from "../resources/PlasticBin.png";
 
 function SideBar() {
+  const [totalWater, setTotalWater] = useState(0);
+  const [totalBottles, setTotalBottles] = useState(0);
+  const [totalPlastic, setTotalPlastic] = useState(0);
+
   var button;
   if (localStorage.getItem("token") == null) {
-    button = <Link href="/login" variant="H4" className="LoginButton">
-      Admin login
-    </Link>;
+    button = (
+      <Link href="/login" variant="H4" className="LoginButton">
+        Admin login
+      </Link>
+    );
   } else {
-    button = <Link href="/admin" variant="H4" className="LoginButton">
-      Admin dashboard
-    </Link>;
+    button = (
+      <Link href="/admin" variant="H4" className="LoginButton">
+        Admin dashboard
+      </Link>
+    );
   }
+
+  useEffect(() => {
+    Axios.get(url + "/FountainController/getFountains").then((res) => {
+      var fountains = res.data.filter(
+        (fountain) => fountain.latitude != null || fountain.longitude != null
+      );
+      var water = 0;
+      var bottles = 0;
+      var plastic = 0;
+      fountains.forEach((element) => {
+        water += element.amount;
+      });
+      setTotalWater(water.toFixed(1));
+      fountains.forEach((element) => {
+        bottles += element.bottlesSaved;
+      });
+      setTotalBottles(bottles);
+      fountains.forEach((element) => {
+        plastic += element.plasticSaved;
+      });
+      setTotalPlastic(plastic.toFixed(3));
+    });
+  }, []);
 
   return (
     <div className="SideBar">
@@ -27,10 +61,10 @@ function SideBar() {
         <img className="SideBarImg" src={WaterDrop} alt=""></img>
         <div className="TextContainer">
           <Typography variant="H4" className="SideBarText" id="valueLabel">
-            Sunaudota vandens (L):
+            Total water used:
           </Typography>
           <Typography variant="h5" className="SideBarText">
-            500
+            {totalWater} L
           </Typography>
         </div>
       </div>
@@ -38,10 +72,10 @@ function SideBar() {
         <img className="SideBarImg" src={WaterBottle} alt=""></img>
         <div className="TextContainer">
           <Typography variant="H4" className="SideBarText" id="valueLabel">
-            Sutaupyta 0.5l vandens buteliukų:
+            Total 0.5l water bottles saved:
           </Typography>
           <Typography variant="h5" className="SideBarText">
-            500
+            {totalBottles}
           </Typography>
         </div>
       </div>
@@ -50,10 +84,10 @@ function SideBar() {
         <img className="SideBarImg" src={PlasticBin} alt=""></img>
         <div className="TextContainer">
           <Typography variant="H4" className="SideBarText" id="valueLabel">
-            Sutaupyta plastiko kg:
+            Total plastic saved:
           </Typography>
           <Typography variant="h5" className="SideBarText">
-            500
+            {totalPlastic} Kg
           </Typography>
         </div>
       </div>

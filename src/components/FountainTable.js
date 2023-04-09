@@ -144,6 +144,10 @@ export const FountainTable = () => {
               <TableCell className="tableHeadCell">Latitude</TableCell>
               <TableCell className="tableHeadCell">Longitude</TableCell>
               <TableCell className="tableHeadCell">Modified On</TableCell>
+              <TableCell className="tableHeadCell">TDS</TableCell>
+              <TableCell className="tableHeadCell">Turbidity</TableCell>
+              <TableCell className="tableHeadCell">pH</TableCell>
+              <TableCell className="tableHeadCell">Water used</TableCell>
               <TableCell className="tableHeadCell" align="center">
                 Controls
               </TableCell>
@@ -165,6 +169,10 @@ export const FountainTable = () => {
               <TableCell>{fountain.latitude ?? "-"}</TableCell>
               <TableCell>{fountain.longitude ?? "-"}</TableCell>
               <TableCell>{fountain.modifiedon ?? "-"}</TableCell>
+              <TableCell>{fountain.tds ?? "-"}</TableCell>
+              <TableCell>{fountain.turbidity ?? "-"}</TableCell>
+              <TableCell>{fountain.ph ?? "-"}</TableCell>
+              <TableCell>{fountain.amount !== null? fountain.amount.toFixed(1) + "L" : "-"}</TableCell>
               <TableCell align="center">
                 <FountainTableSwitch
                   initialState={fountain.isworking}
@@ -185,7 +193,7 @@ export const FountainTable = () => {
           <TableRow>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-              colSpan={8}
+              colSpan={11}
               count={fountains.length}
               rowsPerPage={rowsPerPage}
               page={page}
