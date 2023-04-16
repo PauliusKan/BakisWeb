@@ -72,7 +72,7 @@ const FountainInfoWindow = ({ fountain }) => {
             Turbidity: {fountain.turbidity ?? "-"} NTU
           </Typography>
           <Typography variant="subtitle2" className="InfoWindowText">
-            Water used: {fountain.amount?.toFixed(1) ?? "0"} L
+            Water used: {fountain.amount?.toFixed(2) ?? "0"} L
           </Typography>
         </Grid>
         <Grid>
