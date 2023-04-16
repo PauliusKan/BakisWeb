@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import SideBarLogo from "../resources/SidebarLogo.png";
 import { useNavigate } from "react-router-dom";
+import { useSignOut } from "react-auth-kit";
 
 const headerBtnSX = {
   my: 2,
@@ -23,6 +24,7 @@ function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const navigate = useNavigate();
+  const signout = useSignOut();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -34,6 +36,7 @@ function ResponsiveAppBar() {
 
   const handleLogoutClick = () => {
     handleCloseUserMenu();
+    signout();
     localStorage.clear();
     navigate("/");
   };

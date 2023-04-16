@@ -3,6 +3,7 @@ import Axios from "axios";
 import { TextField, Button, Grid, Container, Typography } from "@mui/material";
 import { StyledEngineProvider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useSignIn } from "react-auth-kit";
 import url from "../url.js";
 import "../css/FormStyle.css";
 
@@ -11,6 +12,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState(false);
   const navigate = useNavigate();
+  const signIn = useSignIn();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -22,11 +24,14 @@ const LoginForm = () => {
       }).then((res) => {
         if (res.data.auth) {
           setErrorMsg(false);
-          localStorage.setItem("errorMsg", true);
-          localStorage.setItem("token", res.data.token);
+          signIn({
+            token: res.data.token,
+            expiresIn: 100,
+            tokenType: "Bearer",
+            authState: res.data.result,
+          })
           localStorage.setItem("name", res.data.result.name);
           localStorage.setItem("email", res.data.result.email);
-          localStorage.setItem("Id", res.data.result.Id);
           navigate("/admin");
         } else {
           localStorage.clear();

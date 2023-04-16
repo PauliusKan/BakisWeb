@@ -1,6 +1,7 @@
 import "../css/MapSideBar.css";
 import { Link, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useAuthHeader } from "react-auth-kit"
 import url from "../url.js";
 import Axios from "axios";
 import SideBarLogo from "../resources/SidebarLogo.png";
@@ -9,12 +10,14 @@ import WaterBottle from "../resources/WaterBottles.png";
 import PlasticBin from "../resources/PlasticBin.png";
 
 function SideBar() {
+  const auth = useAuthHeader();
+
   const [totalWater, setTotalWater] = useState(0);
   const [totalBottles, setTotalBottles] = useState(0);
   const [totalPlastic, setTotalPlastic] = useState(0);
 
   var button;
-  if (localStorage.getItem("token") == null) {
+  if (auth() === "") {
     button = (
       <Link href="/login" variant="H4" className="LoginButton">
         Admin login

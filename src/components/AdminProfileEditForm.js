@@ -2,13 +2,17 @@ import React, { useState } from "react";
 import { TextField, Button, Grid, Container, Typography } from "@mui/material";
 import { StyledEngineProvider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAuthUser } from "react-auth-kit"
+import Cookies from "js-cookie"
 import Axios from "axios";
 import url from "../url";
 import "../css/FormStyle.css";
 
 const AdminProfileEditForm = (fountainId) => {
-  const [username, setUsername] = useState(localStorage.getItem("name"));
-  const [email, setEmail] = useState(localStorage.getItem("email"));
+  const auth = useAuthUser();
+
+  const [username, setUsername] = useState(auth().name);
+  const [email, setEmail] = useState(auth().email);
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [passwordsDontMatchError, setPasswordsDontMatchError] = useState(false);
@@ -23,11 +27,12 @@ const AdminProfileEditForm = (fountainId) => {
     if (username.length > 4) {
       setUsernameTooShortError(false);
       await Axios.post(url + "/AdminController/editProfileInfo", {
-        oldEmail: localStorage.getItem("email"),
+        oldEmail: auth().email,
         newEmail: email,
         username: username,
       }).then((res) => {
         if (res.status === 200) {
+          Cookies.set("authorization_state", JSON.stringify({email: email, name: username, id: auth().id}));
           localStorage.setItem("email", email);
           localStorage.setItem("name", username);
           navigate("/admin");
@@ -55,7 +60,7 @@ const AdminProfileEditForm = (fountainId) => {
       setPasswordsDontMatchError(false);
       setPasswordsTooShortError(false);
       await Axios.post(url + "/AdminController/changePassword", {
-        email: localStorage.getItem("email"),
+        email: auth().email,
         password: password,
       }).then((res) => {
           if (res.status === 200) {
