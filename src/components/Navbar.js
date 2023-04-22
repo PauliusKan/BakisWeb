@@ -15,6 +15,9 @@ const headerBtnSX = {
   my: 2,
   color: "white",
   display: "block",
+  fontWeight: "bold",
+  fontSize: 17,
+  textTransform: "none",
   "&:hover": {
     backgroundColor: "#005800",
   },
