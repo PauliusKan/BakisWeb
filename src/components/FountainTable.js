@@ -172,14 +172,21 @@ export const FountainTable = () => {
               <TableCell>{fountain.tds ?? "-"}</TableCell>
               <TableCell>{fountain.turbidity ?? "-"}</TableCell>
               <TableCell>{fountain.ph ?? "-"}</TableCell>
-              <TableCell>{fountain.amount !== null? fountain.amount.toFixed(2) + "L" : "-"}</TableCell>
+              <TableCell>
+                {fountain.amount !== null
+                  ? fountain.amount.toFixed(2) + "L"
+                  : "-"}
+              </TableCell>
               <TableCell align="center">
                 <FountainTableSwitch
                   initialState={fountain.isworking}
                   fountainId={fountain.id}
                 />
                 <FountainTableEditButton fountainId={fountain.id} />
-                <FountainTableDeleteButton fountain={fountain} onDelete={refreshTableAfterDelete} />
+                <FountainTableDeleteButton
+                  fountain={fountain}
+                  onDelete={refreshTableAfterDelete}
+                />
               </TableCell>
             </TableRow>
           ))}

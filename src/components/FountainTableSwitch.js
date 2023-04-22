@@ -5,7 +5,7 @@ import Axios from "axios";
 import url from "../url.js";
 
 const FountainTableSwitch = ({ initialState, fountainId }) => {
-  const [checked, setChecked] = useState(initialState === 1 ? true : false);
+  const [checked, setChecked] = useState(initialState === 1);
 
   const handleSwitch = async () => {
     setChecked(!checked);

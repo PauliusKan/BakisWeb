@@ -19,6 +19,10 @@ const FountainTableDeleteButton = ({ fountain, onDelete }) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleDelete = () => {
+    setOpen(false);
     Axios.post(url + "/FountainController/deleteFountain", {
         fountainId: fountain.id, 
       }).then(() => onDelete(fountain.id));
@@ -60,7 +64,7 @@ const FountainTableDeleteButton = ({ fountain, onDelete }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>
+          <Button onClick={handleDelete}>
             Delete
           </Button>
         </DialogActions>
