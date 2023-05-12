@@ -31,7 +31,7 @@ const FountainInfoWindow = ({ fountain }) => {
       : "red";
 
   return (
-    <Grid direction="row" alignItems="center" justifyContent="center">
+    <Grid direction="column" container alignItems="center" justifyContent="center">
       <Typography variant="h6" className="InfoWindowText">
         {fountain.name}
       </Typography>
