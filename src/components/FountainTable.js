@@ -138,16 +138,16 @@ export const FountainTable = () => {
         <TableHead>
           <TableRow>
             <StyledEngineProvider injectFirst>
-              <TableCell className="tableHeadCell">FountainId</TableCell>
-              <TableCell className="tableHeadCell">Name</TableCell>
-              <TableCell className="tableHeadCell">Address</TableCell>
-              <TableCell className="tableHeadCell">Latitude</TableCell>
-              <TableCell className="tableHeadCell">Longitude</TableCell>
-              <TableCell className="tableHeadCell">Modified On</TableCell>
-              <TableCell className="tableHeadCell">TDS</TableCell>
-              <TableCell className="tableHeadCell">Turbidity</TableCell>
-              <TableCell className="tableHeadCell">pH</TableCell>
-              <TableCell className="tableHeadCell">Water used</TableCell>
+              <TableCell className="tableHeadCell" align="center">FountainId</TableCell>
+              <TableCell className="tableHeadCell" align="center">Name</TableCell>
+              <TableCell className="tableHeadCell" align="center">Address</TableCell>
+              <TableCell className="tableHeadCell" align="center">Latitude</TableCell>
+              <TableCell className="tableHeadCell" align="center">Longitude</TableCell>
+              <TableCell className="tableHeadCell" align="center">Modified On</TableCell>
+              <TableCell className="tableHeadCell" align="center">TDS</TableCell>
+              <TableCell className="tableHeadCell" align="center">Turbidity</TableCell>
+              <TableCell className="tableHeadCell" align="center">pH</TableCell>
+              <TableCell className="tableHeadCell" align="center">Water used</TableCell>
               <TableCell className="tableHeadCell" align="center">
                 Controls
               </TableCell>
@@ -163,16 +163,16 @@ export const FountainTable = () => {
             : fountains
           ).map((fountain) => (
             <TableRow key={fountain.id}>
-              <TableCell>{fountain.id}</TableCell>
-              <TableCell>{fountain.name ?? "-"}</TableCell>
-              <TableCell>{fountain.address ?? "-"}</TableCell>
-              <TableCell>{fountain.latitude ?? "-"}</TableCell>
-              <TableCell>{fountain.longitude ?? "-"}</TableCell>
-              <TableCell>{fountain.modifiedon ?? "-"}</TableCell>
-              <TableCell>{fountain.tds ?? "-"}</TableCell>
-              <TableCell>{fountain.turbidity ?? "-"}</TableCell>
-              <TableCell>{fountain.ph ?? "-"}</TableCell>
-              <TableCell>
+              <TableCell align="center">{fountain.id}</TableCell>
+              <TableCell align="center">{fountain.name ?? "-"}</TableCell>
+              <TableCell align="center">{fountain.address ?? "-"}</TableCell>
+              <TableCell align="center">{fountain.latitude ?? "-"}</TableCell>
+              <TableCell align="center">{fountain.longitude ?? "-"}</TableCell>
+              <TableCell align="center">{fountain.modifiedon ?? "-"}</TableCell>
+              <TableCell align="center">{fountain.tds ?? "-"}</TableCell>
+              <TableCell align="center">{fountain.turbidity ?? "-"}</TableCell>
+              <TableCell align="center">{fountain.ph ?? "-"}</TableCell>
+              <TableCell align="center">
                 {fountain.amount !== null
                   ? fountain.amount.toFixed(2) + "L"
                   : "-"}
